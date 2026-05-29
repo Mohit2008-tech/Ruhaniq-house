@@ -1,10 +1,23 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Heart, Hand, Infinity, Sparkles, Instagram, Phone, Play, Pause, ChevronRight } from "lucide-react";
+import { Heart, Hand, Infinity, Sparkles, Instagram, Phone, Play, Pause, ChevronRight, MessageCircle } from "lucide-react";
+
+const WA_NUMBER = "919990818716";
+const IG_URL = "https://www.instagram.com/ruhaniq.house/";
+
+function openWhatsApp(message: string) {
+  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
+}
+
+function orderOnWhatsApp(product?: string) {
+  const text = product
+    ? `Hi Ruhaniq! I'd love to order a *${product}*. Could you please share more details?`
+    : `Hi Ruhaniq! I'd like to place an order. Could you please help me?`;
+  openWhatsApp(text);
+}
 
 import logoImage from "@assets/image_1780078393199.png";
 import heroBg from "@assets/1_1780078403802.png";
@@ -53,6 +66,13 @@ export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [form, setForm] = useState({ name: "", contact: "", looking: "", message: "" });
+
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const text = `Hi Ruhaniq! 🌸\n\n*Name:* ${form.name}\n*Contact:* ${form.contact}\n*Looking for:* ${form.looking}${form.message ? `\n*Message:* ${form.message}` : ""}`;
+    openWhatsApp(text);
+  };
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -90,7 +110,7 @@ export default function Home() {
             <button onClick={() => scrollToSection('about')} className="hover:text-primary transition-colors">About</button>
             <button onClick={() => scrollToSection('contact')} className="hover:text-primary transition-colors">Contact</button>
           </div>
-          <Button onClick={() => scrollToSection('contact')} className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm">
+          <Button onClick={() => orderOnWhatsApp()} className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm">
             Order Now
           </Button>
         </div>
@@ -226,7 +246,7 @@ export default function Home() {
                     <p className="text-foreground/80 mb-4 flex-1 italic">{product.desc}</p>
                     <div className="flex items-center justify-between mt-auto pt-4 border-t border-border/50">
                       <span className="font-medium text-primary">{product.price}</span>
-                      <Button variant="ghost" onClick={() => scrollToSection('contact')} className="rounded-full hover:bg-primary hover:text-white transition-colors group/btn">
+                      <Button variant="ghost" onClick={() => orderOnWhatsApp(product.title)} className="rounded-full hover:bg-primary hover:text-white transition-colors group/btn">
                         Order <ChevronRight className="w-4 h-4 ml-1 group-hover/btn:translate-x-1 transition-transform" />
                       </Button>
                     </div>
@@ -298,7 +318,7 @@ export default function Home() {
                   <div className="p-4 rounded-full bg-background shadow-sm mb-2">{item.icon}</div>
                   <h3 className="font-serif text-2xl font-medium">{item.name}</h3>
                   <p className="text-2xl text-primary font-light mb-4">{item.price}</p>
-                  <Button onClick={() => scrollToSection('contact')} variant={item.featured ? "default" : "outline"} className={`rounded-full w-full ${item.featured ? 'bg-primary hover:bg-primary/90 text-white' : 'border-primary/30 text-foreground hover:bg-primary/10'}`}>
+                  <Button onClick={() => orderOnWhatsApp(item.name)} variant={item.featured ? "default" : "outline"} className={`rounded-full w-full ${item.featured ? 'bg-primary hover:bg-primary/90 text-white' : 'border-primary/30 text-foreground hover:bg-primary/10'}`}>
                     Order Now
                   </Button>
                 </Card>
@@ -385,47 +405,59 @@ export default function Home() {
                 </p>
               </div>
               <div className="relative z-10 space-y-6">
-                <a href="#" className="flex items-center gap-4 text-white/90 hover:text-white transition-colors group">
+                <a href={IG_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 text-white/90 hover:text-white transition-colors group">
                   <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
                     <Instagram className="w-5 h-5" />
                   </div>
                   <span className="font-medium text-lg">@ruhaniq.house</span>
                 </a>
-                <a href="#" className="flex items-center gap-4 text-white/90 hover:text-white transition-colors group">
+                <button onClick={() => orderOnWhatsApp()} className="flex items-center gap-4 text-white/90 hover:text-white transition-colors group">
                   <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
-                    <Phone className="w-5 h-5" />
+                    <MessageCircle className="w-5 h-5" />
                   </div>
                   <span className="font-medium text-lg">WhatsApp Us</span>
-                </a>
+                </button>
               </div>
             </div>
             
             <div className="md:w-7/12 p-12 bg-card">
-              <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+              <form className="space-y-6" onSubmit={handleFormSubmit}>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-foreground/80 pl-1">Name</label>
-                  <Input placeholder="Your beautiful name" className="rounded-2xl h-14 bg-background border-border/50 focus-visible:ring-primary/20" />
+                  <Input required value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="Your beautiful name" className="rounded-2xl h-14 bg-background border-border/50 focus-visible:ring-primary/20" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-foreground/80 pl-1">Email or WhatsApp Number</label>
-                  <Input placeholder="How should we reach you?" className="rounded-2xl h-14 bg-background border-border/50 focus-visible:ring-primary/20" />
+                  <Input required value={form.contact} onChange={e => setForm(f => ({ ...f, contact: e.target.value }))} placeholder="How should we reach you?" className="rounded-2xl h-14 bg-background border-border/50 focus-visible:ring-primary/20" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-foreground/80 pl-1">What are you looking for?</label>
-                  <Input placeholder="E.g., Ribbon bouquet for a birthday" className="rounded-2xl h-14 bg-background border-border/50 focus-visible:ring-primary/20" />
+                  <Input required value={form.looking} onChange={e => setForm(f => ({ ...f, looking: e.target.value }))} placeholder="E.g., Ribbon bouquet for a birthday" className="rounded-2xl h-14 bg-background border-border/50 focus-visible:ring-primary/20" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-foreground/80 pl-1">Message (Optional)</label>
-                  <Textarea placeholder="Any specific colors, details, or feelings you want to capture..." className="rounded-2xl min-h-[120px] resize-none bg-background border-border/50 focus-visible:ring-primary/20 p-4" />
+                  <Textarea value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))} placeholder="Any specific colors, details, or feelings you want to capture..." className="rounded-2xl min-h-[120px] resize-none bg-background border-border/50 focus-visible:ring-primary/20 p-4" />
                 </div>
-                <Button className="w-full h-14 rounded-2xl bg-primary hover:bg-primary/90 text-lg mt-4 shadow-sm text-white">
-                  Send a Message
+                <Button type="submit" className="w-full h-14 rounded-2xl bg-primary hover:bg-primary/90 text-lg mt-4 shadow-sm text-white flex items-center justify-center gap-2">
+                  <MessageCircle className="w-5 h-5" /> Send via WhatsApp
                 </Button>
               </form>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Floating WhatsApp Button */}
+      <a
+        href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Hi Ruhaniq! I'd like to place an order.")}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-testid="floating-whatsapp"
+        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5d] text-white rounded-full shadow-2xl px-5 py-3 transition-all hover:scale-105 hover:shadow-green-300/40 font-medium"
+      >
+        <MessageCircle className="w-5 h-5 fill-white/20" />
+        Order on WhatsApp
+      </a>
 
       {/* 10. Footer */}
       <footer className="bg-background py-16 border-t border-border/40">
