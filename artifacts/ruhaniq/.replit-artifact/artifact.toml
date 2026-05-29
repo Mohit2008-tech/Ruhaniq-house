@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Ruhaniq — Pretty things with a soul"
+version = "1.0.0"
+id = "artifacts/ruhaniq"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23783
+
+[services.development]
+run = "pnpm --filter @workspace/ruhaniq run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/ruhaniq", "run", "build" ]
+publicDir = "artifacts/ruhaniq/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23783"
+BASE_PATH = "/"

@@ -1,0 +1,131 @@
+Build a beautiful, heart-touching single-page website (Phase 1) for a handmade products brand called **Ruhaniq** using React + Tailwind CSS.
+
+---
+
+BRAND IDENTITY
+- Name: Ruhaniq (meaning: soulful / spiritual in Urdu)
+- Tagline options (use all, rotate or stack):
+  • "Pretty things with a soul"
+  • "Nazakat in every detail" (Nazakat = elegance/delicacy in Urdu)
+  • "Handcrafted with love and warmth"
+- Aesthetic: Warm, romantic, artisanal. Think soft creams, dusty roses, warm beiges, terracotta, and sage green. The visual mood should feel like a beautifully lit handmade studio — warm light, soft textures, heartfelt and premium.
+- Fonts: Use Google Fonts — "Cormorant Garamond" (serif, for headings/taglines) + "Lato" or "DM Sans" (sans-serif, for body text). This pairing feels elegant and artisanal.
+
+---
+
+PRODUCTS OFFERED
+Display these 6 product categories as cards/sections:
+1. Ribbon Flower Bouquets
+2. Fragrance Candles
+3. Crochet Art
+4. Hand Embroidery Clothing
+5. Resin Keepsakes
+6. Customised Gift Hampers
+
+---
+
+PAGE SECTIONS (top to bottom)
+
+1. NAVBAR
+- Logo: "Ruhaniq" in Cormorant Garamond, elegant cursive-like weight
+- Nav links: Home, Products, About, Contact
+- A soft CTA button: "Order Now" (rounded, dusty rose color)
+- Sticky navbar with very light blur/frosted effect on scroll
+
+2. HERO SECTION
+- Full-width, warm and immersive
+- Large heading: "Pretty things with a soul" — big, serif, emotional
+- Subheading: "Nazakat in every detail — handcrafted with love and warmth"
+- Two CTA buttons: "Explore Products" + "Watch Us Create"
+- Background: a soft warm gradient (cream to blush pink) OR a placeholder image slot labeled [HERO IMAGE — upload your product photo here]
+- A small floating badge: "✦ Handmade with love"
+
+3. PRODUCT SHOWCASE GRID
+- Section heading: "Our Creations"
+- Subheading: "Each piece is made by hand, with intention and care"
+- 6 product cards in a responsive grid (2 cols on mobile, 3 on desktop)
+- Each card has:
+  • A placeholder image area labeled [Upload product photo]
+  • Product name
+  • Short poetic description (1–2 lines, write beautiful placeholder copy for each)
+  • Starting price tag (e.g. "Starting ₹199")
+  • A soft "View Details" button
+- Cards should have a warm hover effect (subtle lift + soft shadow)
+- Placeholder copy examples:
+  • Ribbon Bouquets: "Blooms that never wither — eternal beauty, hand-tied with silk ribbons"
+  • Fragrance Candles: "Light a candle, fill the room with warmth and memory"
+  • Crochet Art: "Loop by loop, crafted with patience and love"
+  • Embroidery Clothing: "Wear art — every stitch tells a story"
+  • Resin Keepsakes: "Captured in resin, forever yours to keep"
+  • Gift Hampers: "Curated with care, gifted with heart"
+
+4. VIDEO GALLERY — "Watch Us Create"
+- Section heading: "The Magic Behind Every Piece"
+- Subheading: "See the love and labor that goes into every creation"
+- A responsive grid of 3–4 video placeholder cards
+- Each card: a soft thumbnail placeholder with a centered play button icon, labeled [Upload your creation video here]
+- Below each video: a short caption like "How we make ribbon bouquets" etc.
+- On click, video should play inline (use HTML5 video tag or iframe-ready placeholder)
+- Warm rounded corners, soft shadow on hover
+
+5. WHY RUHANIQ — Values Strip
+- 4 icon + text columns:
+  • 🌸 100% Handmade
+  • 💛 Made with Love
+  • 🎁 Customisable
+  • ✨ Affordable Luxury
+- Simple, clean, centered layout. Warm icon colors.
+
+6. PRICING TEASER SECTION
+- Section heading: "Beautiful Art, Honest Prices"
+- Subheading: "Handcrafted quality that won't break your heart — or your budget"
+- A placeholder callout card: "📋 Full price menu coming soon — [Upload price list here]"
+- Or optionally show 3 price cards as sample tiers (low/mid/gift):
+  • Candles from ₹199
+  • Bouquets from ₹349
+  • Gift Hampers from ₹599
+- Each price card: warm background, product icon, name, starting price, "Order Now" button
+
+7. TESTIMONIALS / LOVE NOTES (placeholder)
+- Section heading: "Words from Our Customers"
+- 3 placeholder quote cards with soft warm styling
+- Placeholder text: "This bouquet made my friend cry happy tears ✨ — Zara, Mumbai" etc.
+- Soft card design with a quote mark graphic
+
+8. ABOUT SECTION — "The Story of Ruhaniq"
+- Short heartfelt paragraph (placeholder): "Ruhaniq was born out of a deep love for making things by hand. Every ribbon tied, every stitch sewn, every candle poured — it's all done with intention, patience, and warmth..."
+- A placeholder for founder photo: [Upload your photo]
+- Soft warm layout, not corporate — personal and emotional
+
+9. CONTACT / ORDER CTA SECTION
+- Heading: "Let's create something beautiful together"
+- Simple form: Name, Email/WhatsApp, What are you looking for?, Message
+- CTA Button: "Send a Message"
+- Social links row: Instagram, WhatsApp (icons)
+- Warm background color (blush or cream)
+
+10. FOOTER
+- Logo + tagline
+- Quick links
+- "Made with ♥ by Ruhaniq"
+
+---
+
+DESIGN RULES
+- Color palette: cream (#FDF6EE), blush pink (#F2C4CE), dusty rose (#C97B84), warm beige (#E8D5B7), terracotta (#C4704F), sage green (#9CAF88), warm white (#FFFAF5)
+- NO cold blues, no neon colors, no stark blacks — keep everything warm and soft
+- All corners rounded (use rounded-2xl or rounded-3xl generously)
+- Generous padding and whitespace — the page should breathe
+- Hover effects: soft scale + warm shadow on cards/buttons
+- All images are placeholder slots — use a warm-toned placeholder gradient with a centered label like "[Upload product photo]" using a dashed border in dusty rose
+- Fully responsive — mobile first
+- Smooth scroll behavior
+- Subtle entrance animations (fade-in on scroll using Intersection Observer or AOS library)
+
+---
+
+PHASE 1 GOALS
+This is Phase 1 — the goal is to present the brand beautifully and build emotional connection. Do NOT add a shopping cart, login, or backend. Just a stunning, heartfelt landing page where the owner can later swap in real photos, videos, and a price menu.
+
+Make it look like a premium handmade brand from Day 1.
+  
