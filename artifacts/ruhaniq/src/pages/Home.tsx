@@ -119,7 +119,7 @@ export default function Home() {
       {/* 2. Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center pt-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src={heroBg} alt="Handmade creations" className="w-full h-full object-cover" />
+          <img src={heroBg} alt="Handmade creations" className="w-full h-full object-cover object-bottom" />
           <div className="absolute inset-0 bg-background/70 backdrop-blur-[2px]"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
         </div>
