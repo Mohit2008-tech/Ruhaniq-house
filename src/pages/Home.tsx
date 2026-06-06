@@ -128,16 +128,28 @@ export default function Home() {
   setFormSubmitted(false);
 
   try {
-    await fetch(config.googleSheetUrl, {
+    const formData = new FormData();
+    formData.append("access_key", "a857fcd9-7485-4b9f-9c36-90cfee23fd52");
+    formData.append("name", trimmedName);
+    formData.append("contact", trimmedContact);
+    formData.append("looking", trimmedLooking);
+    formData.append("message", trimmedMessage);
+    
+    const response = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `name=${encodeURIComponent(form.name)}&contact=${encodeURIComponent(form.contact)}&looking=${encodeURIComponent(form.looking)}&message=${encodeURIComponent(form.message)}`
+      body: formData
     });
     
-    // If fetch completes without throwing, data was sent successfully
-    setFormSubmitted(true);
-    setForm({ name: "", contact: "", looking: "", message: "" });
-    setTimeout(() => setFormSubmitted(false), 4000);
+    const data = await response.json();
+    
+    if (data.success) {
+      setFormSubmitted(true);
+      setForm({ name: "", contact: "", looking: "", message: "" });
+      setTimeout(() => setFormSubmitted(false), 4000);
+    } else {
+      setFormError(true);
+      setTimeout(() => setFormError(false), 5000);
+    }
   } catch (error) {
     console.log(error);
     setFormError(true);
