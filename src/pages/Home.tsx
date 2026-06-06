@@ -34,16 +34,88 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formError, setFormError] = useState(false);
-  const [validationErrors, setValidationErrors] = useState<{name?: string; contact?: string; looking?: string}>({});
+  const [validationErrors, setValidationErrors] = useState<{name?: string; contact?: string; looking?: string; message?: string}>({});
+
+  // Regex patterns for validation
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+  const phoneRegex = /^[6-9][0-9]{9}$/;
+
+  // Validate individual fields on blur
+  const validateField = (field: 'name' | 'contact' | 'looking' | 'message') => {
+    const value = form[field];
+    const trimmedValue = value.trim();
+    
+    let error: string | undefined;
+    
+    switch (field) {
+      case 'name':
+        if (!trimmedValue) {
+          error = "Please share your beautiful name 💕";
+        } else if (value !== trimmedValue) {
+          error = "Please remove extra spaces from your name ✨";
+        }
+        break;
+      case 'contact':
+        if (!trimmedValue) {
+          error = "We need a way to reach you 📱";
+        } else if (!emailRegex.test(trimmedValue) && !phoneRegex.test(trimmedValue)) {
+          error = "Please enter a valid @gmail.com email or 10-digit mobile number 📧📱";
+        }
+        break;
+      case 'looking':
+        if (!trimmedValue) {
+          error = "Tell us what you're dreaming of ✨";
+        } else if (value !== trimmedValue) {
+          error = "Please remove extra spaces ✨";
+        }
+        break;
+      case 'message':
+        if (value && value !== trimmedValue) {
+          error = "Please remove extra spaces from your message ✨";
+        }
+        break;
+    }
+    
+    setValidationErrors(prev => ({ ...prev, [field]: error }));
+  };
 
   const handleFormSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
   
+  // Trim spaces from all fields
+  const trimmedName = form.name.trim();
+  const trimmedLooking = form.looking.trim();
+  const trimmedMessage = form.message.trim();
+  const trimmedContact = form.contact.trim();
+  
   // Custom validation
-  const errors: {name?: string; contact?: string; looking?: string} = {};
-  if (!form.name.trim()) errors.name = "Please share your beautiful name 💕";
-  if (!form.contact.trim()) errors.contact = "We need a way to reach you 📱";
-  if (!form.looking.trim()) errors.looking = "Tell us what you're dreaming of ✨";
+  const errors: {name?: string; contact?: string; looking?: string; message?: string} = {};
+  
+  // Name validation - no leading/trailing spaces
+  if (!trimmedName) {
+    errors.name = "Please share your beautiful name 💕";
+  } else if (form.name !== trimmedName) {
+    errors.name = "Please remove extra spaces from your name ✨";
+  }
+  
+  // Contact validation - email or phone regex
+  if (!trimmedContact) {
+    errors.contact = "We need a way to reach you 📱";
+  } else if (!emailRegex.test(trimmedContact) && !phoneRegex.test(trimmedContact)) {
+    errors.contact = "Please enter a valid @gmail.com email or 10-digit mobile number 📧📱";
+  }
+  
+  // Looking validation - no leading/trailing spaces
+  if (!trimmedLooking) {
+    errors.looking = "Tell us what you're dreaming of ✨";
+  } else if (form.looking !== trimmedLooking) {
+    errors.looking = "Please remove extra spaces ✨";
+  }
+  
+  // Message validation - no leading/trailing spaces (optional field)
+  if (form.message && form.message !== trimmedMessage) {
+    errors.message = "Please remove extra spaces from your message ✨";
+  }
   
   if (Object.keys(errors).length > 0) {
     setValidationErrors(errors);
@@ -400,7 +472,8 @@ export default function Home() {
                     onChange={e => {
                       setForm(f => ({ ...f, name: e.target.value }));
                       if (validationErrors.name) setValidationErrors(v => ({ ...v, name: undefined }));
-                    }} 
+                    }}
+                    onBlur={() => validateField('name')}
                     placeholder="Your beautiful name" 
                     className={`rounded-2xl h-14 bg-background border-border/50 focus-visible:ring-primary/20 ${validationErrors.name ? 'border-red-300 focus-visible:ring-red-200' : ''}`} 
                   />
@@ -417,7 +490,8 @@ export default function Home() {
                     onChange={e => {
                       setForm(f => ({ ...f, contact: e.target.value }));
                       if (validationErrors.contact) setValidationErrors(v => ({ ...v, contact: undefined }));
-                    }} 
+                    }}
+                    onBlur={() => validateField('contact')}
                     placeholder="How should we reach you?" 
                     className={`rounded-2xl h-14 bg-background border-border/50 focus-visible:ring-primary/20 ${validationErrors.contact ? 'border-red-300 focus-visible:ring-red-200' : ''}`} 
                   />
@@ -434,7 +508,8 @@ export default function Home() {
                     onChange={e => {
                       setForm(f => ({ ...f, looking: e.target.value }));
                       if (validationErrors.looking) setValidationErrors(v => ({ ...v, looking: undefined }));
-                    }} 
+                    }}
+                    onBlur={() => validateField('looking')}
                     placeholder="E.g., Ribbon bouquet for a birthday" 
                     className={`rounded-2xl h-14 bg-background border-border/50 focus-visible:ring-primary/20 ${validationErrors.looking ? 'border-red-300 focus-visible:ring-red-200' : ''}`} 
                   />
@@ -446,7 +521,21 @@ export default function Home() {
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-foreground/80 pl-1">Message (Optional)</label>
-                  <Textarea value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))} placeholder="Any specific colors, details, or feelings you want to capture..." className="rounded-2xl min-h-[120px] resize-none bg-background border-border/50 focus-visible:ring-primary/20 p-4" />
+                  <Textarea 
+                    value={form.message} 
+                    onChange={e => {
+                      setForm(f => ({ ...f, message: e.target.value }));
+                      if (validationErrors.message) setValidationErrors(v => ({ ...v, message: undefined }));
+                    }}
+                    onBlur={() => validateField('message')}
+                    placeholder="Any specific colors, details, or feelings you want to capture..." 
+                    className={`rounded-2xl min-h-[120px] resize-none bg-background border-border/50 focus-visible:ring-primary/20 p-4 ${validationErrors.message ? 'border-red-300 focus-visible:ring-red-200' : ''}`} 
+                  />
+                  {validationErrors.message && (
+                    <p className="text-sm text-red-500 pl-2 flex items-center gap-1 font-medium animate-in fade-in slide-in-from-top-1">
+                      {validationErrors.message}
+                    </p>
+                  )}
                 </div>
                 <Button type="submit" disabled={isSubmitting} className="w-full h-14 rounded-2xl bg-primary hover:bg-primary/90 text-lg mt-4 shadow-sm text-white flex items-center justify-center gap-2 disabled:opacity-70">
                   <Heart className="w-5 h-5" /> {isSubmitting ? "Sending..." : formSubmitted ? "Sent Successfully! ✓" : "Send Message"}
