@@ -129,7 +129,7 @@ export default function Home() {
 
   try {
     const formData = new FormData();
-    formData.append("access_key", "a857fcd9-7485-4b9f-9c36-90cfee23fd52");
+    formData.append("access_key", import.meta.env.VITE_WEB3FORMS_KEY || "");
     formData.append("name", trimmedName);
     formData.append("contact", trimmedContact);
     formData.append("looking", trimmedLooking);
