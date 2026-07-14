@@ -11,7 +11,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
-      <Route component={Please enter a correct URL} />
+      <Route component={NotFound} />
     </Switch>
   );
 }
