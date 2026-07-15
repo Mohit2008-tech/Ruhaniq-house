@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Heart, Hand, Infinity, Sparkles, Instagram, Play, Pause, ChevronRight, MessageCircle, Volume2, VolumeX, CheckCircle, X, AlertCircle } from "lucide-react";
+import { Heart, Hand, Infinity, Sparkles, Instagram, Play, Pause, ChevronRight, MessageCircle, Volume2, VolumeX, CheckCircle, X, AlertCircle, ShoppingBag } from "lucide-react";
 
 // Modular imports
 import { FadeIn } from "@/components/FadeIn";
@@ -198,7 +199,8 @@ export default function Home() {
           </div>
           <div className="hidden md:flex items-center gap-8 font-medium text-foreground/80">
             <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-primary transition-colors">Home</button>
-            <button onClick={() => scrollToSection('products')} className="hover:text-primary transition-colors">Products</button>
+            <Link href="/products" className="hover:text-primary transition-colors">Product Catalog</Link>
+            <button onClick={() => scrollToSection('products')} className="hover:text-primary transition-colors">Featured</button>
             <button onClick={() => scrollToSection('about')} className="hover:text-primary transition-colors">About</button>
             <button onClick={() => scrollToSection('contact')} className="hover:text-primary transition-colors">Contact</button>
           </div>
@@ -296,6 +298,19 @@ export default function Home() {
                 </Card>
               </FadeIn>
             ))}
+          </div>
+          
+          {/* View Full Catalog Button */}
+          <div className="mt-16 text-center">
+            <FadeIn delay={products.length * 100}>
+              <Link href="/products">
+                <Button size="lg" className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg shadow-lg hover:shadow-xl transition-all">
+                  <ShoppingBag className="w-5 h-5 mr-2" />
+                  View Full Product Catalog
+                </Button>
+              </Link>
+              <p className="text-sm text-muted-foreground mt-4">Browse all categories, filter by type, and explore customization options</p>
+            </FadeIn>
           </div>
         </div>
       </section>
