@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -198,7 +199,7 @@ export default function Home() {
           </div>
           <div className="hidden md:flex items-center gap-8 font-medium text-foreground/80">
             <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-primary transition-colors">Home</button>
-            <button onClick={() => scrollToSection('products')} className="hover:text-primary transition-colors">Products</button>
+            <Link href="/products" className="hover:text-primary transition-colors cursor-pointer">Products Catalog</Link>
             <button onClick={() => scrollToSection('about')} className="hover:text-primary transition-colors">About</button>
             <button onClick={() => scrollToSection('contact')} className="hover:text-primary transition-colors">Contact</button>
           </div>
@@ -234,9 +235,11 @@ export default function Home() {
             </p>
           </FadeIn>
           <FadeIn delay={300} className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button size="lg" onClick={() => scrollToSection('products')} className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground w-full sm:w-auto text-lg h-14 px-8">
-              Explore Our Creations
-            </Button>
+            <Link href="/products">
+              <Button size="lg" className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground w-full sm:w-auto text-lg h-14 px-8">
+                Explore Product Catalog <ChevronRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
             <Button size="lg" variant="outline" onClick={() => scrollToSection('video')} className="rounded-full border-primary/20 bg-background/50 hover:bg-background/80 text-foreground w-full sm:w-auto text-lg h-14 px-8 backdrop-blur-sm">
               Watch Us Create
             </Button>
@@ -626,7 +629,7 @@ export default function Home() {
           
           <div className="flex gap-8 mb-12 text-sm font-medium uppercase tracking-widest text-foreground/60">
             <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-primary transition-colors">Home</button>
-            <button onClick={() => scrollToSection('products')} className="hover:text-primary transition-colors">Products</button>
+            <Link href="/products" className="hover:text-primary transition-colors cursor-pointer">Products Catalog</Link>
             <button onClick={() => scrollToSection('about')} className="hover:text-primary transition-colors">About</button>
           </div>
           
